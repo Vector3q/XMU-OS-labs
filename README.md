@@ -7,6 +7,12 @@ lab5：银行家算法避免死锁
 
 lab6：进程调度方法：OPT,FIFO,LRU
 
+Email：Vector3q@163.com
 ----------------------------------------------------
+Xiamen University, Software Engineering Department, Operation System labs
 
-欢迎讨论，Email：Vector3q@163.com
+lab4：reader writer question, producer consumer issue
+
+lab5：banker algorithm
+
+lab6：process scheduling method
