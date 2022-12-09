@@ -5,7 +5,9 @@ lab4：读者写者，生产者消费者
 
 lab5：银行家算法避免死锁
 
-lab6：进程调度方法：OPT,FIFO,LRU
+lab6：进程调度方法：OPT, FIFO, LRU
+
+lab7：处理器调度方法：FCFS, RR(q=1), SPN, SRT, HRRN
 
 Email：Vector3q@163.com
 ----------------------------------------------------
@@ -16,3 +18,5 @@ lab4：reader writer question, producer consumer issue
 lab5：banker algorithm
 
 lab6：process scheduling method
+
+lab7：processer scheduling method
