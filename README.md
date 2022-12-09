@@ -19,4 +19,4 @@ lab5：banker algorithm
 
 lab6：process scheduling method
 
-lab7：processer scheduling method
+lab7：processer scheduling method：FCFS, RR(q=1), SPN, SRT, HRRN
