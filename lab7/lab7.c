@@ -33,6 +33,7 @@ void FCFS(struct PCB pcbarray[])
 void RR_q1(struct PCB pcbarray[])
 {
 	int TotalTime = 0;
+	int process_finish_flag = 0;
 	int running_process_number = 0;
 	int running_process_index = 0;
 	
@@ -55,30 +56,34 @@ void RR_q1(struct PCB pcbarray[])
 		{
 			if(TotalTime >= pcbarray[i].PCB_ArrivalTime && time_served[i] == -1)
 			{
-				// head insert the ready queue.
-				running_process_number++;
-				time_served[i] = 0;
-				for(int i=running_process_number; i>=1; i--)
-				{	
-					process_running_by_order[i] = process_running_by_order[i-1];
+				if(process_finish_flag == 1)
+				{
+					process_running_by_order[running_process_number] = i;
+					time_served[i] = 0;
+					running_process_number++;
+					continue;
 				}
-				process_running_by_order[0] = i;
+				// head insert the ready queue.
+				time_served[i] = 0;
+				process_running_by_order[running_process_number] = process_running_by_order[running_process_number - 1];
+				process_running_by_order[running_process_number - 1] = i;
+				running_process_number++;
 			}
 		}
+		process_finish_flag = 0;
 		
 		// find the running process.
 		running_process_index = process_running_by_order[0];
+		//printf("now running process index: %d\n", running_process_index);
 
 		// update the ready queue.
 		for(int i=0; i<running_process_number; i++)
 		{	
 			process_running_by_order[i] = process_running_by_order[i+1];
 		}
-		running_process_number--;
 		
 		TotalTime++;
 		time_served[running_process_index] += 1;
-
 		// owing to "q=1", there is no need to care about complex situation, such as "timeslice = 2", 2+2 > 3.
 		// It's over just now. 
 		if(time_served[running_process_index] >= pcbarray[running_process_index].PCB_ServiceTime)
@@ -87,11 +92,12 @@ void RR_q1(struct PCB pcbarray[])
 			pcbarray[running_process_index].PCB_TurnaroundTime = pcbarray[running_process_index].PCB_FinishTime - pcbarray[running_process_index].PCB_ArrivalTime;
 			pcbarray[running_process_index].PCB_Tr_Over_Ts = (float)pcbarray[running_process_index].PCB_TurnaroundTime / pcbarray[running_process_index].PCB_ServiceTime;
 			time_served[running_process_index] = -2;
+			running_process_number--;
+			process_finish_flag = 1;
 		}
 		else 
 		{
-			process_running_by_order[running_process_number] = running_process_index;
-			running_process_number++;
+			process_running_by_order[running_process_number-1] = running_process_index;
 		}
 		
 		// just to confirm whether to the end.
@@ -327,7 +333,7 @@ int main(void)
 	printf("\n");
 	struct PCB pcb_array[process_number];
 	
-	printf("\tPlease input information of each process, just the arrive time and serve time: \n");
+	printf("\tPlease input information of each process, just the process name, the service time and arrival time by order: \n");
 	int count = process_number;
 
 	for(int i=0; i<process_number; i++)
@@ -360,7 +366,6 @@ int main(void)
 	else
 	{
 		printf("Please input the correct option!\n");
-		
 		return 0;	
 	}
 	
